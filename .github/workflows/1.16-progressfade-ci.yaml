@@ -16,6 +16,10 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
+      - name: Check Java version
+        run: java -version
+      - name: Check OS
+        run: uname -r
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - run: chmod +x ./gradlew
@@ -26,4 +30,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "1.16-progressfade-ci"
           prerelease: true
-          files: build/*.jar
+          files: build/libs/*.jar
