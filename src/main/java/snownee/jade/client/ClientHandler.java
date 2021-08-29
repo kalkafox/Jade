@@ -45,7 +45,7 @@ public final class ClientHandler {
 			float progress = state.getPlayerRelativeBlockHardness(mc.player, mc.player.world, playerController.currentBlock);
 			progress = playerController.curBlockDamageMP + mc.getRenderPartialTicks() * progress;
 			progress = MathHelper.clamp(progress, 0, 1);
-			progressAlpha = (playerController.curBlockDamageMP < 0.01 ? 0 : progressAlpha);
+			progressAlpha = (playerController.curBlockDamageMP < 0.01 ? (progressAlpha - (savedProgress * 100)  * mc.getTickLength()) : progressAlpha);
 			progressAlpha += (savedProgress * 100) * mc.getTickLength();
 			AbstractGui.fill(RenderContext.matrixStack, rect.x + 1, rect.y + rect.height, rect.x + 1 + (int) (rect.width * progress), rect.y + rect.height + 1, alphaColor.getRGB());
 			savedProgress = progress;
