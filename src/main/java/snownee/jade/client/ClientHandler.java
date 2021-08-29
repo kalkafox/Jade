@@ -46,11 +46,11 @@ public final class ClientHandler {
 			progress = playerController.curBlockDamageMP + mc.getRenderPartialTicks() * progress;
 			progress = MathHelper.clamp(progress, 0, 1);
 			progressAlpha = (playerController.curBlockDamageMP < 0.01 ? (progressAlpha - (savedProgress * 100)  * mc.getTickLength()) : progressAlpha);
-			progressAlpha += (savedProgress * 100) * mc.getTickLength();
+			progressAlpha += (savedProgress * mc.getTickLength()) * 100;
 			AbstractGui.fill(RenderContext.matrixStack, rect.x + 1, rect.y + rect.height, rect.x + 1 + (int) (rect.width * progress), rect.y + rect.height + 1, alphaColor.getRGB());
 			savedProgress = progress;
 		} else {
-			progressAlpha -= (savedProgress * 50)  * mc.getTickLength();
+			progressAlpha -= (savedProgress * mc.getTickLength()) * 50;
 			AbstractGui.fill(RenderContext.matrixStack, rect.x + 1, rect.y + rect.height, rect.x + 1 + (int) (rect.width * savedProgress), rect.y + rect.height + 1, alphaColor.getRGB());
 		}
 	}
