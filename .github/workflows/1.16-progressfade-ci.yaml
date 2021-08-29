@@ -20,7 +20,7 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - run: chmod +x ./gradlew
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew -Dorg.gradle.jvmargs='-Xmx3G' build
       - uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
