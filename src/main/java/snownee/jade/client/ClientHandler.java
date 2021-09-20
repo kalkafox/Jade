@@ -54,25 +54,27 @@ public final class ClientHandler {
 		Color fadeColor = new Color(color);
 		Color alphaColor = new Color(fadeColor.getRed(), fadeColor.getGreen(), fadeColor.getBlue(), (int) Mth.clamp(progressAlpha, 0, 200));
 		Rectangle rect = event.getPosition();
-		progressAlpha = (progressAlpha > 200 ? 200 : progressAlpha);
-		progressAlpha = (progressAlpha < 0 ? 0 : progressAlpha);
 		int height = rect.height;
 		int width = rect.width;
 		if (!Waila.CONFIG.get().getOverlay().getSquare()) {
 			height -= 1;
 			width -= 2;
 		}
+		handleProgressAlpha(playerController, state, mc);
+		DisplayHelper.fill(event.getPoseStack(), 0, height - 1, width * savedProgress, height, alphaColor.getRGB());
+	}
+
+	private static void handleProgressAlpha(MultiPlayerGameMode playerController, BlockState state, Minecraft mc) {
+		progressAlpha = Mth.clamp(progressAlpha, 0, 200);
 		if (playerController.isDestroying()) {
 			float progress = state.getDestroyProgress(mc.player, mc.player.level, playerController.destroyBlockPos);
 			progress = playerController.destroyProgress + mc.getFrameTime() * progress;
 			progress = Mth.clamp(progress, 0, 1);
-			progressAlpha = (playerController.destroyProgress < 0.01 ? (progressAlpha - (savedProgress * 100)  * mc.getDeltaFrameTime()) : progressAlpha);
-			progressAlpha += (savedProgress * mc.getDeltaFrameTime()) * 100;
+			progressAlpha += (progress * mc.getDeltaFrameTime()) / 0.02F;
 			savedProgress = progress;
 		} else {
-			progressAlpha -= (savedProgress * mc.getDeltaFrameTime()) * 50;
+			progressAlpha -= (savedProgress * mc.getDeltaFrameTime()) / 0.02F;
 		}
-		DisplayHelper.fill(event.getPoseStack(), 0, height - 1, width * savedProgress, height, alphaColor.getRGB());
 	}
 
 	private static final Cache<BlockState, BlockState> CHEST_CACHE = CacheBuilder.newBuilder().build();
