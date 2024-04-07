@@ -285,12 +285,8 @@ public final class JadeClient {
 		if (playerController.isDestroying()) {
 			progressAlpha = Math.min(progressAlpha, 0.6F);
 			float progress = state.getDestroyProgress(mc.player, mc.player.level(), playerController.destroyBlockPos);
-			if (playerController.destroyProgress + progress >= 1) {
-				progressAlpha = savedProgress = 1;
-			} else {
-				progress = playerController.destroyProgress + mc.getFrameTime() * progress;
-				savedProgress = Mth.clamp(progress, 0, 1);
-			}
+			progress = playerController.destroyProgress + mc.getFrameTime() * progress;
+			savedProgress = Mth.clamp(progress, 0, 1);
 		} else {
 			progressAlpha = Math.max(progressAlpha, 0);
 		}
@@ -304,6 +300,10 @@ public final class JadeClient {
 		float offset3 = theme.tooltipStyle.boxProgressOffset(Direction2D.LEFT);
 		width += offset1 - offset3;
 		DisplayHelper.fill(guiGraphics, offset3, top - 1 + offset0, offset3 + width * savedProgress, top + offset2, color);
+	}
+
+	public static void setBreakProgress(float progress) {
+		savedProgress = progressAlpha = progress;
 	}
 
 	public static MutableComponent format(String s, Object... objects) {

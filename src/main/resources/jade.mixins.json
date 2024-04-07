@@ -13,6 +13,7 @@
 		"FontMixin",
 		"FullTextSearchTreeMixin",
 		"KeyAccess",
+		"MultiPlayerGameModeMixin",
 		"StringRenderOutputMixin",
 		"ThemeHelperMixin"
 	],
